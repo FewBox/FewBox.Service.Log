@@ -1,4 +1,4 @@
-using Dapper;
+﻿using Dapper;
 using FewBox.Service.Log.Model.Entities;
 using FewBox.Service.Log.Model.Repositories;
 using FewBox.Core.Persistence.Orm;
@@ -6,21 +6,21 @@ using System;
 
 namespace FewBox.Service.Log.Repository
 {
-    public class AppRepository : BaseRepository<App, Guid>, IAppRepository
+    public class TraceLogRepository : BaseRepository<TraceLog, Guid>, ITraceLogRepository
     {
-        public AppRepository(IOrmSession ormSession, ICurrentUser<Guid> currentUser) 
-        : base("app", ormSession, currentUser)
+        public TraceLogRepository(IOrmSession ormSession, ICurrentUser<Guid> currentUser) 
+        : base("tracelog", ormSession, currentUser)
         {
         }
 
         protected override string GetSaveSegmentSql()
         {
-            return "Name";
+            return "Name, Param";
         }
 
         protected override string GetUpdateSegmentSql()
         {
-            return "Name";
+            return "Name, Param";
         }
 
         protected override string GetUpdateWithUniqueKeyWhereSegmentSql()

@@ -1,7 +1,7 @@
     
 using FewBox.Service.Log.Controllers;
+using FewBox.Service.Log.Model.Configs;
 using FewBox.Service.Log.Model.Dtos;
-using FewBox.Service.Log.Model.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
@@ -16,9 +16,9 @@ namespace FewBox.Service.Log.TestSuite
         public void Init()
         {
             // E.G: l.Method(It.IsAny<string>());
-            var appService = Mock.Of<IAppService>(l=>
-                l.GetHealtyInfo()==new HealthyDto{ Version = "1.0.1" });
-            this.HealthyController = new HealthyController(appService);
+            var healthyConfig = Mock.Of<HealthyConfig>(l=>
+                l.Version=="1.0.1");
+            this.HealthyController = new HealthyController(healthyConfig);
         }
 
 

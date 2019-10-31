@@ -3,9 +3,9 @@ using System;
 
 namespace FewBox.Service.Log.Model.Entities
 {
-    public class App : Entity<Guid>
+    public abstract class Log : Entity<Guid>
     {
         public string Name { get; set; }
+        public string Param { get; set; }
     }
 }
-   
