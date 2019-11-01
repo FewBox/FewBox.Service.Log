@@ -10,7 +10,6 @@ using FewBox.Core.Web.Filter;
 using FewBox.Core.Web.Orm;
 using FewBox.Core.Web.Security;
 using FewBox.Core.Web.Token;
-using FewBox.Service.Log.Model.Configs;
 using FewBox.Service.Log.Model.Repositories;
 using FewBox.Service.Log.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -25,8 +24,8 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using NSwag;
 using NSwag.SwaggerGeneration.Processors.Security;
-using Dapper;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using FewBox.Core.Web.Error;
 
 namespace FewBox.Service.Log
 {
@@ -85,6 +84,7 @@ namespace FewBox.Service.Log
             services.AddAutoMapper();
             services.AddMemoryCache();
             services.AddRouting(options => options.LowercaseUrls = true);
+            services.AddSingleton<IExceptionProcessorService, ExceptionProcessorService>();
             // Used for Config.
             // Used for [Authorize(Policy="JWTRole_ControllerAction")].
             var jwtConfig = this.Configuration.GetSection("JWTConfig").Get<JWTConfig>();
@@ -110,10 +110,10 @@ namespace FewBox.Service.Log
             services.AddScoped<IExceptionLogRepository, ExceptionLogRepository>();
             services.AddScoped<ITraceLogRepository, TraceLogRepository>();
             // Used for Exception&Log AOP.
-            services.AddScoped<IExceptionHandler, ConsoleExceptionHandler>();
-            services.AddScoped<ITraceHandler, ConsoleTraceHandler>();
-            //services.AddScoped<IExceptionHandler, ServiceExceptionHandler>();
-            //services.AddScoped<ITraceHandler, ServiceTraceHandler>();
+            // services.AddScoped<IExceptionHandler, ConsoleExceptionHandler>();
+            // services.AddScoped<ITraceHandler, ConsoleTraceHandler>();
+            services.AddScoped<IExceptionHandler, ServiceExceptionHandler>();
+            services.AddScoped<ITraceHandler, ServiceTraceHandler>();
             // Used for IHttpContextAccessor&IActionContextAccessor context.
             services.AddHttpContextAccessor();
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
