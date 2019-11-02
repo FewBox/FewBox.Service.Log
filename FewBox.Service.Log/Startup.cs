@@ -49,7 +49,6 @@ namespace FewBox.Service.Log
             JsonUtility.IsNullIgnore = true;
             HttpUtility.IsCertificateNeedValidate = false;
             HttpUtility.IsEnsureSuccessStatusCode = false;
-            services.AddRouting(options => options.LowercaseUrls = true);
             services.AddMvc(options=>{
                 if (this.HostingEnvironment.EnvironmentName != "Test")
                 {
