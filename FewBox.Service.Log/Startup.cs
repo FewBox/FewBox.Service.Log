@@ -26,6 +26,8 @@ using NSwag;
 using NSwag.SwaggerGeneration.Processors.Security;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using FewBox.Core.Web.Error;
+using FewBox.Core.Web.Log;
+using FewBox.Core.Web.Notification;
 
 namespace FewBox.Service.Log
 {
@@ -109,10 +111,11 @@ namespace FewBox.Service.Log
             services.AddScoped<IExceptionLogRepository, ExceptionLogRepository>();
             services.AddScoped<ITraceLogRepository, TraceLogRepository>();
             // Used for Exception&Log AOP.
-            // services.AddScoped<IExceptionHandler, ConsoleExceptionHandler>();
-            // services.AddScoped<ITraceHandler, ConsoleTraceHandler>();
-            services.AddScoped<IExceptionHandler, ServiceExceptionHandler>();
-            services.AddScoped<ITraceHandler, ServiceTraceHandler>();
+            // services.AddScoped<ILogHandler, ConsoleLogHandler>();
+            // services.AddScoped<INotificationHandler, ConsoleNotificationHandler>();
+            services.AddScoped<ILogHandler, ServiceLogHandler>();
+            services.AddScoped<INotificationHandler, ServiceNotificationHandler>();
+            services.AddScoped<ITryCatchService, TryCatchService>();
             // Used for IHttpContextAccessor&IActionContextAccessor context.
             services.AddHttpContextAccessor();
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
